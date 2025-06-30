@@ -1,0 +1,31 @@
+{
+  "name": "og-image-creator",
+  "version": "0.0.1",
+  "description": "CLI utility to generate Open Graph images (og:image) from any site, using a flexible HTML template and Puppeteer screenshot of page elements. Created for https://todaysdatenow.com/.",
+  "license": "MIT",
+  "author": "dejurin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dejurin/og-image-creator.git"
+  },
+  "type": "module",
+  "main": "og-image.mjs",
+  "scripts": {
+    "start": "node og-image.mjs"
+  },
+  "keywords": [
+    "og-image",
+    "open-graph",
+    "puppeteer",
+    "screenshot",
+    "cli",
+    "generator",
+    "seo",
+    "social-preview"
+  ],
+  "dependencies": {
+    "puppeteer": "^24.11.1",
+    "sharp": "^0.34.2",
+    "yargs": "^18.0.0"
+  }
+}

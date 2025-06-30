@@ -21,11 +21,18 @@ This utility was developed for [https://todaysdatenow.com/](https://todaysdateno
 
 ---
 
-## Install
+## Clone
 
 ```bash
-npm install puppeteer yargs
-````
+git clone https://github.com/dejurin/og-image-creator.git
+cd og-image-creator
+```
+
+## Install dependencies
+
+```bash
+npm install
+```
 
 ---
 

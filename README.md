@@ -10,6 +10,11 @@ This utility was developed for [https://todaysdatenow.com/](https://todaysdateno
 
 ---
 
+## Who is this utility for?
+For those who don't have time to customize. For those who are looking for a static solution. You have 100 pages, you've generated images and uploaded them to the site. ✅
+
+---
+
 ## Features
 
 - Capture screenshots of a specific element or full page (default: full page)

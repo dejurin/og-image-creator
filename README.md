@@ -39,7 +39,7 @@ npm install
 ## Usage
 
 ```bash
-node og-image-creator.js \
+node og-image.mjs \
   --url "https://todaysdatenow.com/" \
   --selector "main" \
   --favicon "favicon.png" \
@@ -52,17 +52,17 @@ node og-image-creator.js \
 
 ### Required arguments
 
-* `--url` - target page URL
+- `--url` - target page URL
 
 ### Optional arguments
 
-* `--selector` - CSS selector for element screenshot (default: `body`, meaning full page)
-* `--favicon` - path to favicon file (`favicon.png`) (default: `favicon.png`)
-* `--title` - OG Title (if omitted, taken from `<title>`)
-* `--description` - OG Description (if omitted, taken from `<meta name="description">`)
-* `--template` - HTML OG-image template (default: `og-template.html`)
-* `--output` - path to output OG-image (default: `og-image.png`)
-* `--mobile` - enable mobile device emulation
+- `--selector` - CSS selector for element screenshot (default: `body`, meaning full page)
+- `--favicon` - path to favicon file (`favicon.png`) (default: `favicon.png`)
+- `--title` - OG Title (if omitted, taken from `<title>`)
+- `--description` - OG Description (if omitted, taken from `<meta name="description">`)
+- `--template` - HTML OG-image template (default: `og-template.html`)
+- `--output` - path to output OG-image (default: `og-image.png`)
+- `--mobile` - enable mobile device emulation
 
 ---
 

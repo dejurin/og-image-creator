@@ -80,45 +80,49 @@ async function screenshotElement(url, selector, outPath) {
     const title = document.title || "";
     const metaDesc = document.querySelector('meta[name="description"]');
     const description = metaDesc ? metaDesc.content : "";
-  
-    const links = Array.from(document.querySelectorAll('link[rel*="icon"][href], link[rel*="apple-touch-icon"][href]'));
-    const priority = ['png', 'svg', 'jpg', 'jpeg', 'webp', "ico"];
+
+    const links = Array.from(
+      document.querySelectorAll(
+        'link[rel*="icon"][href], link[rel*="apple-touch-icon"][href]'
+      )
+    );
+    const priority = ["png", "svg", "jpg", "jpeg", "webp", "ico"];
     let favicon = null;
-  
+
     for (const ext of priority) {
-      const l = links.find(link =>
-        link.href && link.href.toLowerCase().includes(`.${ext}`)
+      const l = links.find(
+        (link) => link.href && link.href.toLowerCase().includes(`.${ext}`)
       );
       if (l) {
         favicon = l.href;
         break;
       }
     }
-  
+
     if (!favicon && links.length) {
       favicon = links[0].href;
     }
-  
+
     return { title, description, favicon };
   });
 
-    let faviconPath = null;
-    if (meta.favicon) {
-      try {
-        const faviconUrl = new URL(meta.favicon, url).href;
-        const res = await fetch(faviconUrl);
-        if (res.ok) {
-          const buffer = Buffer.from(await res.arrayBuffer());
-          const ext = faviconUrl.split('.').pop().split(/\#|\?/)[0].toLowerCase();
-          if (["png", "jpg", "jpeg", "svg", "webp", "ico"].includes(ext)) {
-            faviconPath = `favicon.${ext}`;
-            await fs.writeFile(faviconPath, buffer);
-          }
+  let faviconPath = null;
+  if (meta.favicon) {
+    try {
+      const faviconUrl = new URL(meta.favicon, url).href;
+      const res = await fetch(faviconUrl);
+      if (res.ok) {
+        const buffer = Buffer.from(await res.arrayBuffer());
+        const ext = faviconUrl.split(".").pop().split(/\#|\?/)[0].toLowerCase();
+        if (["png", "jpg", "jpeg", "svg", "webp", "ico"].includes(ext)) {
+          faviconPath = `favicon.${ext}`;
+          await fs.writeFile(faviconPath, buffer);
         }
-      } catch (e) {
-        faviconPath = null;
       }
+    } catch (e) {
+      faviconPath = null;
     }
+  }
 
   const el = await page.waitForSelector(selector, {
     visible: true,
@@ -155,22 +159,29 @@ async function generateOgImage({
       )}" class="shadow-2xl" alt="element">`
     )
     .replace("{{TITLE}}", title)
-    .replace("{{DESCRIPTION}}", description ? `<div class="text-2xl text-center px-32 mx-auto pb-0 my-4 line-clamp-2">${description}</div>` : "")
+    .replace(
+      "{{DESCRIPTION}}",
+      description
+        ? `<div class="text-2xl text-center px-32 mx-auto pb-0 my-4 line-clamp-2">${description}</div>`
+        : ""
+    )
     .replace(
       "{{FAVICON}}",
       faviconPath
-        ? `<div class="flex my-auto"><img src="file://${path.resolve(faviconPath)}" alt="icon" style="height:${FAVICON_SIZE}px;width:${FAVICON_SIZE}px;display:inline-block;"></div>`
+        ? `<div class="flex my-auto"><img src="file://${path.resolve(
+            faviconPath
+          )}" alt="icon" style="height:${FAVICON_SIZE}px;width:${FAVICON_SIZE}px;display:inline-block;"></div>`
         : ""
     )
     .replace("{{DOMAIN}}", new URL(url).hostname);
 
-    console.log(template);
+  console.log(template);
   await fs.writeFile(tempHtml, template, "utf-8");
 
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
-  const fileUrl = 'file://' + path.resolve(tempHtml);
-  await page.goto(fileUrl, { waitUntil: 'networkidle0' });
+  const fileUrl = "file://" + path.resolve(tempHtml);
+  await page.goto(fileUrl, { waitUntil: "networkidle0" });
   await page.setViewport({ width: 1200, height: 630 });
   await page.screenshot({ path: ogOutPath });
   await browser.close();
@@ -178,8 +189,6 @@ async function generateOgImage({
   await fs.unlink(imgPath);
   await fs.unlink(faviconPath);
 }
-
-
 
 (async () => {
   let title = argv.title;
